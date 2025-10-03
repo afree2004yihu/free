@@ -1,0 +1,297 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>你的名字 | 计算机科学 · 个人主页</title>
+  <meta name="description" content="计算机专业学生个人网站：项目、科研/竞赛、经历、技能与联系方式。" />
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='0.9em' font-size='80'>💻</text></svg>">
+  <style>
+    /* ===== Design Tokens ===== */
+    :root {
+      --bg: #0b0d12;           /* background */
+      --panel: #11151c;        /* card background */
+      --text: #e6ebf2;         /* primary text */
+      --muted: #97a3b6;        /* secondary text */
+      --brand: #5aa9ff;        /* brand color */
+      --brand-2: #7cf5ff;      /* accent */
+      --border: #1e2633;       /* subtle borders */
+      --radius: 14px;          /* cards */
+      --shadow: 0 10px 30px rgba(0,0,0,.35);
+      --maxw: 1100px;
+    }
+
+    @media (prefers-color-scheme: light) {
+      :root {
+        --bg: #f6f7fb;
+        --panel: #ffffff;
+        --text: #111827;
+        --muted: #576079;
+        --brand: #2563eb;
+        --brand-2: #0ea5e9;
+        --border: #e5e7eb;
+        --shadow: 0 10px 30px rgba(2,6,23,.08);
+      }
+    }
+
+    * { box-sizing: border-box; }
+    html, body { height: 100%; }
+    body {
+      margin: 0; font-family: ui-sans-serif, -apple-system, Segoe UI, Roboto, "Noto Sans CJK SC", "PingFang SC", "Hiragino Sans GB", Arial, "Microsoft YaHei", sans-serif;
+      background: radial-gradient(1200px 800px at 80% -10%, rgba(90,169,255,.08), transparent),
+                  radial-gradient(1000px 700px at -10% 20%, rgba(124,245,255,.06), transparent),
+                  var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+    }
+
+    a { color: var(--brand); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+
+    .container { max-width: var(--maxw); margin: 0 auto; padding: 0 20px; }
+
+    /* ===== Header / Nav ===== */
+    header { position: sticky; top: 0; z-index: 50; backdrop-filter: saturate(140%) blur(8px); background: color-mix(in oklab, var(--bg) 80%, transparent); border-bottom: 1px solid var(--border); }
+    .nav { display: flex; align-items: center; justify-content: space-between; gap: 16px; height: 64px; }
+    .brand { display:flex; align-items:center; gap:10px; font-weight: 700; letter-spacing: .2px; }
+    .brand .dot { width: 10px; height: 10px; border-radius: 50%; background: linear-gradient(135deg, var(--brand), var(--brand-2)); box-shadow: 0 0 18px color-mix(in oklab, var(--brand) 60%, transparent); }
+    .nav a { font-weight: 600; }
+    .nav-links { display:flex; gap:18px; align-items:center; }
+
+    /* ===== Hero ===== */
+    .hero { padding: 72px 0 36px; }
+    .hero-grid { display:grid; grid-template-columns: 1.2fr .8fr; gap: 28px; align-items: center; }
+    .hero h1 { font-size: clamp(28px, 4vw, 44px); line-height: 1.15; margin: 0 0 10px; }
+    .hero p.lead { font-size: clamp(15px, 1.8vw, 18px); color: var(--muted); margin: 8px 0 22px; }
+    .tags { display:flex; flex-wrap:wrap; gap:8px; margin-top: 8px; }
+    .tag { padding: 6px 10px; border: 1px solid var(--border); border-radius: 999px; font-size: 12px; color: var(--muted); }
+    .cta { display:flex; gap:12px; margin-top: 18px; }
+    .btn { display:inline-flex; align-items:center; gap:8px; padding: 10px 14px; border-radius: 12px; border: 1px solid var(--border); font-weight: 700; background: var(--panel); box-shadow: var(--shadow); }
+    .btn.primary { background: linear-gradient(135deg, var(--brand), var(--brand-2)); color: #001018; border: none; }
+    .btn .icon { font-style: normal; }
+    .avatar-wrap { position: relative; }
+    .avatar { width: 100%; border-radius: 20px; border: 1px solid var(--border); box-shadow: var(--shadow); aspect-ratio: 1; object-fit: cover; background: #0d1117; }
+
+    /* ===== Sections ===== */
+    section { padding: 28px 0; }
+    .section-title { display:flex; align-items:center; gap:10px; font-size: 20px; margin: 0 0 14px; }
+    .section-title .bar { width: 20px; height: 6px; border-radius: 999px; background: linear-gradient(90deg, var(--brand), var(--brand-2)); }
+
+    .grid { display:grid; gap: 16px; }
+    .grid.cols-3 { grid-template-columns: repeat(3, 1fr); }
+    .grid.cols-2 { grid-template-columns: repeat(2, 1fr); }
+
+    .card { background: var(--panel); border: 1px solid var(--border); border-radius: var(--radius); padding: 18px; box-shadow: var(--shadow); }
+    .card h3 { margin: 0 0 8px; font-size: 18px; }
+    .card p { margin: 0; color: var(--muted); font-size: 14px; }
+    .meta { display:flex; flex-wrap: wrap; gap: 8px; margin-top: 10px; }
+    .meta .pill { padding: 4px 8px; border-radius: 999px; border: 1px solid var(--border); font-size: 12px; color: var(--muted); }
+
+    /* ===== Timeline (Experience) ===== */
+    .timeline { position: relative; padding-left: 18px; }
+    .timeline::before { content: ""; position: absolute; left: 6px; top: 4px; bottom: 4px; width: 2px; background: var(--border); border-radius: 2px; }
+    .t-item { position: relative; margin: 0 0 18px; }
+    .t-item::before { content: ""; position: absolute; left: -1px; top: 2px; width: 10px; height: 10px; border-radius: 50%; background: linear-gradient(135deg, var(--brand), var(--brand-2)); box-shadow: 0 0 0 3px color-mix(in oklab, var(--brand) 25%, transparent); }
+    .t-item h4 { margin: 0; font-size: 16px; }
+    .t-item .sub { color: var(--muted); font-size: 13px; margin-top: 2px; }
+
+    /* ===== Footer ===== */
+    footer { margin: 30px 0 40px; color: var(--muted); font-size: 13px; text-align: center; }
+
+    /* ===== Responsive ===== */
+    @media (max-width: 920px) {
+      .hero-grid { grid-template-columns: 1fr; }
+      .grid.cols-3 { grid-template-columns: 1fr; }
+      .grid.cols-2 { grid-template-columns: 1fr; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      * { scroll-behavior: auto !important; }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="container nav" role="navigation" aria-label="Primary">
+      <div class="brand"><span class="dot" aria-hidden="true"></span><span>你的名字 / Your Name</span></div>
+      <nav class="nav-links">
+        <a href="#projects">项目</a>
+        <a href="#research">科研/竞赛</a>
+        <a href="#experience">经历</a>
+        <a href="#skills">技能</a>
+        <a href="#contact">联系</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="container">
+    <!-- Hero -->
+    <section class="hero" aria-labelledby="hero-title">
+      <div class="hero-grid">
+        <div>
+          <h1 id="hero-title">你好，我是 <strong>你的名字</strong>（CS 本科生）<br/>
+            专注 <span style="background:linear-gradient(90deg,var(--brand),var(--brand-2)); -webkit-background-clip:text; background-clip:text; color:transparent;">机器学习 / 全栈开发 / 开源</span>
+          </h1>
+          <p class="lead">我热爱把想法变成可落地的产品与研究。正在寻找 <strong>2026 届校招/暑期实习</strong> 机会。</p>
+          <div class="tags" aria-label="Skill tags">
+            <span class="tag">Python</span>
+            <span class="tag">C++</span>
+            <span class="tag">PyTorch</span>
+            <span class="tag">React</span>
+            <span class="tag">SQL</span>
+          </div>
+          <div class="cta">
+            <a class="btn primary" href="resume.pdf" target="_blank" rel="noopener" aria-label="Download resume">📄 下载简历 PDF</a>
+            <a class="btn" href="https://github.com/yourname" target="_blank" rel="noopener" aria-label="GitHub profile">⭐ GitHub</a>
+            <a class="btn" href="#contact" aria-label="Contact me">✉️ 联系我</a>
+          </div>
+        </div>
+        <div class="avatar-wrap">
+          <!-- Replace src with your own photo. Recommended 800x800 -->
+          <img class="avatar" src="https://avatars.githubusercontent.com/u/9919?s=200&v=4" alt="你的头像" />
+        </div>
+      </div>
+    </section>
+
+    <!-- Projects -->
+    <section id="projects" aria-labelledby="projects-title">
+      <h2 class="section-title" id="projects-title"><span class="bar"></span> 项目 Projects</h2>
+      <div class="grid cols-3">
+        <article class="card" aria-labelledby="p1t">
+          <h3 id="p1t">LLM 法律问答助手</h3>
+          <p>基于检索增强与多轮对话的法律咨询原型，显著降低幻觉；响应延迟 <strong>-35%</strong>，正确率 <strong>+18%</strong>。</p>
+          <div class="meta">
+            <span class="pill">Python</span>
+            <span class="pill">FastAPI</span>
+            <span class="pill">RAG</span>
+            <a class="pill" href="#" aria-label="Live demo">Demo ↗</a>
+            <a class="pill" href="#" aria-label="GitHub repository">GitHub ↗</a>
+          </div>
+        </article>
+        <article class="card" aria-labelledby="p2t">
+          <h3 id="p2t">校园二手平台（PWA）</h3>
+          <p>面向本校同学的拍卖/求购小程序，支持离线与消息推送，3 个月覆盖 <strong>2k+</strong> 学生。</p>
+          <div class="meta">
+            <span class="pill">React</span>
+            <span class="pill">Node</span>
+            <span class="pill">MongoDB</span>
+            <a class="pill" href="#">Demo ↗</a>
+            <a class="pill" href="#">GitHub ↗</a>
+          </div>
+        </article>
+        <article class="card" aria-labelledby="p3t">
+          <h3 id="p3t">图像检索 · 课程大作业</h3>
+          <p>实现 CNN + 向量检索（FAISS），在公开数据集上 mAP 提升 <strong>+6.2%</strong>。</p>
+          <div class="meta">
+            <span class="pill">PyTorch</span>
+            <span class="pill">FAISS</span>
+            <span class="pill">Docker</span>
+            <a class="pill" href="#">Report ↗</a>
+            <a class="pill" href="#">Code ↗</a>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <!-- Research / Competitions -->
+    <section id="research" aria-labelledby="research-title">
+      <h2 class="section-title" id="research-title"><span class="bar"></span> 科研 / 竞赛 Research & Competitions</h2>
+      <div class="grid cols-2">
+        <article class="card">
+          <h3>研究方向</h3>
+          <p>信息检索、对话系统、系统优化。</p>
+          <ul>
+            <li>与某某实验室合作，发表 XX 会议（2025）一作/二作论文。</li>
+            <li>开源复现某论文 baseline，并将复现实验贡献回上游。</li>
+          </ul>
+        </article>
+        <article class="card">
+          <h3>竞赛成绩</h3>
+          <ul>
+            <li>蓝桥杯省赛一等奖（2024）</li>
+            <li>ACM-ICPC 区域赛铜牌（2023）</li>
+            <li>挑战杯校赛一等奖（2023）</li>
+          </ul>
+        </article>
+      </div>
+    </section>
+
+    <!-- Experience -->
+    <section id="experience" aria-labelledby="exp-title">
+      <h2 class="section-title" id="exp-title"><span class="bar"></span> 经历 Experience</h2>
+      <div class="card">
+        <div class="timeline" aria-label="Experience timeline">
+          <div class="t-item">
+            <h4>软件工程实习生 · 某互联网公司</h4>
+            <div class="sub">2025.07 – 2025.09 · 北京 · 服务端开发</div>
+            <p>负责检索服务性能优化（p95 延迟 -22%），参与日常迭代与故障排查。</p>
+          </div>
+          <div class="t-item">
+            <h4>算法工程实习生 · 某实验室</h4>
+            <div class="sub">2024.03 – 2024.12 · 上海 · NLP/IR</div>
+            <p>搭建 RAG 原型与评测框架，推动自动评测流程上线。</p>
+          </div>
+          <div class="t-item">
+            <h4>本科 · 计算机科学与技术</h4>
+            <div class="sub">2022 – 2026（预计） · GPA 3.7/4.0</div>
+            <p>课程：数据结构与算法、数据库、操作系统、计算机网络、机器学习。</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Skills -->
+    <section id="skills" aria-labelledby="skills-title">
+      <h2 class="section-title" id="skills-title"><span class="bar"></span> 技能 Skills</h2>
+      <div class="grid cols-3">
+        <div class="card">
+          <h3>Languages</h3>
+          <p>Python, C/C++, Java, SQL, JavaScript/TypeScript</p>
+        </div>
+        <div class="card">
+          <h3>Frameworks</h3>
+          <p>PyTorch, TensorFlow, FastAPI, React, Node, Spring</p>
+        </div>
+        <div class="card">
+          <h3>Tools</h3>
+          <p>Git, Linux, Docker, Bash, AWS/GCP, Redis, Kafka</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Contact -->
+    <section id="contact" aria-labelledby="contact-title">
+      <h2 class="section-title" id="contact-title"><span class="bar"></span> 联系 Contact</h2>
+      <div class="card">
+        <p>欢迎通过以下方式联系我：</p>
+        <ul>
+          <li>📧 邮箱：<a href="mailto:youremail@example.com">youremail@example.com</a></li>
+          <li>⭐ GitHub：<a href="https://github.com/yourname" target="_blank" rel="noopener">github.com/yourname</a></li>
+          <li>💼 LinkedIn：<a href="https://www.linkedin.com/in/yourname" target="_blank" rel="noopener">linkedin.com/in/yourname</a></li>
+        </ul>
+        <p>或直接填写下面的表单（示例，需自行接入后端或第三方服务）：</p>
+        <form onsubmit="event.preventDefault(); alert('Thanks! This demo does not send messages.');" aria-label="Contact form">
+          <div style="display:grid; gap:10px; grid-template-columns: 1fr 1fr;">
+            <input required aria-label="Your name" placeholder="Your name" style="padding:10px;border:1px solid var(--border);border-radius:12px;background:transparent;color:var(--text)">
+            <input required aria-label="Your email" placeholder="Your email" type="email" style="padding:10px;border:1px solid var(--border);border-radius:12px;background:transparent;color:var(--text)">
+          </div>
+          <textarea required aria-label="Message" placeholder="Message" rows="4" style="margin-top:10px;width:100%;padding:10px;border:1px solid var(--border);border-radius:12px;background:transparent;color:var(--text)"></textarea>
+          <div style="margin-top:10px;display:flex;gap:10px;">
+            <button class="btn primary" type="submit">Send</button>
+            <a class="btn" href="#top">Back to top ↑</a>
+          </div>
+        </form>
+      </div>
+    </section>
+
+    <footer>
+      © <span id="year"></span> 你的名字 · Built with ❤ · <a href="#">源代码</a>
+    </footer>
+  </main>
+
+  <script>
+    // Simple runtime helpers
+    document.getElementById('year').textContent = new Date().getFullYear();
+  </script>
+</body>
+</html>
